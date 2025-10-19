@@ -30,9 +30,11 @@ interface FpcalcResult {
 @injectable()
 export class FpcalcFingerprinter implements IFingerprinter {
   private readonly fpcalcCommand: string;
+  private readonly fpcalcAsync: (file: string, options: FpcalcOptions) => Promise<FpcalcResult>;
 
   constructor(fpcalcCommand: string = 'fpcalc') {
     this.fpcalcCommand = fpcalcCommand;
+    this.fpcalcAsync = promisify(fpcalc);
   }
 
   /**

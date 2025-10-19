@@ -1,5 +1,8 @@
 import { Container } from 'inversify';
 import 'reflect-metadata';
+import { TYPES } from './types.js';
+import type { IFingerprinter } from '@application/ports/IFingerprinter.js';
+import { FpcalcFingerprinter } from '@infrastructure/external/FpcalcFingerprinter.js';
 
 /**
  * Dependency Injection Container
@@ -22,9 +25,14 @@ export class DIContainer {
 
   /**
    * Registers all application dependencies
-   * Will be populated in subsequent tasks
    */
   private registerDependencies(): void {
-    // Dependencies will be registered here as modules are implemented
+    // Register Fingerprinter
+    this.container
+      .bind<IFingerprinter>(TYPES.IFingerprinter)
+      .to(FpcalcFingerprinter)
+      .inSingletonScope();
+
+    // More bindings will be added in subsequent tasks
   }
 }
