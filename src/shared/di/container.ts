@@ -10,6 +10,9 @@ import { ConsoleLogger } from '@infrastructure/adapters/ConsoleLogger.js';
 import { JsonTrackRepository } from '@infrastructure/persistence/JsonTrackRepository.js';
 import { GenerateFingerprintUseCase } from '@application/use-cases/fingerprint/GenerateFingerprintUseCase.js';
 import { TYPES } from './types.js';
+import { DownloadSampleUseCase } from '@application/use-cases/sample/DownloadSampleUseCase.js';
+import { ISampleDownloader } from '@application/ports/ISampleDownloader.js';
+import { YtDlpSampleDownloader } from '@infrastructure/external/YtDlpSampleDownloader.js';
 
 /**
  * Dependency Injection Container
@@ -49,6 +52,17 @@ export class DIContainer {
       .bind<GenerateFingerprintUseCase>(TYPES.GenerateFingerprintUseCase)
       .to(GenerateFingerprintUseCase)
       .inTransientScope();
+
+      this.container
+  .bind<ISampleDownloader>(TYPES.SampleDownloader)
+  .to(YtDlpSampleDownloader)
+  .inSingletonScope();
+
+// Use case
+this.container
+  .bind<DownloadSampleUseCase>(TYPES.DownloadSampleUseCase)
+  .to(DownloadSampleUseCase)
+  .inTransientScope();
   }
 
   /**

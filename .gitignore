@@ -50,3 +50,6 @@ desktop.ini
 *.backup
 *.bak
 data/*.backup
+
+merge-files.js
+merged-project.txt
