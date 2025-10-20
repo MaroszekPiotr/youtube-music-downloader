@@ -1,8 +1,12 @@
+// src/shared/di/container.ts
+
 import { Container } from 'inversify';
 import 'reflect-metadata';
-import { TYPES } from './types.js';
 import type { IFingerprinter } from '@application/ports/IFingerprinter.js';
+import type { ILogger } from '@application/ports/ILogger.js';
 import { FpcalcFingerprinter } from '@infrastructure/external/FpcalcFingerprinter.js';
+import { ConsoleLogger } from '@infrastructure/adapters/ConsoleLogger.js';
+import { TYPES } from './types.js';
 
 /**
  * Dependency Injection Container
@@ -27,12 +31,21 @@ export class DIContainer {
    * Registers all application dependencies
    */
   private registerDependencies(): void {
-    // Register Fingerprinter
+    // Logger (temporary implementation)
     this.container
-      .bind<IFingerprinter>(TYPES.IFingerprinter)
+      .bind<ILogger>(TYPES.Logger)
+      .to(ConsoleLogger)
+      .inSingletonScope();
+
+    // Infrastructure adapters
+    this.container
+      .bind<IFingerprinter>(TYPES.Fingerprinter)
       .to(FpcalcFingerprinter)
       .inSingletonScope();
 
-    // More bindings will be added in subsequent tasks
+    // Use cases will be registered as they are implemented
   }
 }
+
+// Export singleton instance
+export const container = new DIContainer().getContainer();

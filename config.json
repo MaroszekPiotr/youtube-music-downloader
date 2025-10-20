@@ -1,0 +1,13 @@
+{
+  "outputDir": "./music",
+  "playlistDir": "./playlists",
+  "dataDir": "./data",
+  "tempDir": "./temp",
+  "logDir": "./logs",
+  "fingerprintSimilarityThreshold": 0.85,
+  "logLevel": "INFO",
+  "maxRetries": 3,
+  "downloadTimeout": 300000,
+  "audioFormat": "mp3",
+  "audioQuality": "192"
+}
